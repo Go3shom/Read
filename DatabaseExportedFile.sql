@@ -39,19 +39,11 @@ INSERT INTO `customers` (`ID`, `CustomerID`, `CustomerName`, `CustomerAddress`) 
 (20, 777, 'Elizabeth Brown', 'Berkeley Gardens 12 Brewery');
 
 --
--- Indexes for dumped tables
---
-
---
 -- Indexes for table `customers`
 --
 ALTER TABLE `customers`
   ADD PRIMARY KEY (`ID`),
   ADD UNIQUE KEY `CustomerID` (`CustomerID`),
-
---
--- AUTO_INCREMENT for dumped tables
---
 
 --
 -- AUTO_INCREMENT for table `customers`
@@ -65,7 +57,6 @@ CREATE DATABASE IF NOT EXISTS `targetdb` DEFAULT CHARACTER SET latin1 COLLATE la
 USE `targetdb`;
 
 -- --------------------------------------------------------
-
 --
 -- Table structure for table `clients`
 --
@@ -78,7 +69,6 @@ CREATE TABLE `clients` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
-
 --
 -- Table structure for table `customers`
 --
@@ -89,10 +79,6 @@ CREATE TABLE `customers` (
   `CustomerName` varchar(50) NOT NULL,
   `CustomerAddress` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Indexes for dumped tables
---
 
 --
 -- Indexes for table `clients`
@@ -109,10 +95,6 @@ ALTER TABLE `customers`
   ADD UNIQUE KEY `CustomerID` (`CustomerID`);
 
 --
--- AUTO_INCREMENT for dumped tables
---
-
---
 -- AUTO_INCREMENT for table `clients`
 --
 ALTER TABLE `clients`
@@ -124,3 +106,23 @@ ALTER TABLE `clients`
 ALTER TABLE `customers`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 --
+
+--
+-- Miinus Query on `targetdb`
+--
+DROP
+PROCEDURE `MinusQuery`;
+CREATE DEFINER = `root`@`localhost` PROCEDURE `MinusQuery`() NOT DETERMINISTIC NO SQL SQL SECURITY DEFINER
+SELECT
+    `CustomerID`, `CustomerName`, `CustomerAddress`
+FROM
+    `sourcedb`.`Customers`
+WHERE
+    (`CustomerID`) AND `CustomerID` NOT IN(
+    SELECT
+        `ClientID`
+    FROM
+        `targetdb`.`Clients`
+    WHERE
+        (`ClientID`)
+)
