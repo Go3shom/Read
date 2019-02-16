@@ -38,6 +38,13 @@ INSERT INTO `customers` (`ID`, `CustomerID`, `CustomerName`, `CustomerAddress`) 
 (19, 888, 'Pedro Afonso', 'Av. dos Lusíadas, 23'),
 (20, 777, 'Elizabeth Brown', 'Berkeley Gardens 12 Brewery');
 
+(21, 444 , "Sven Ottlieb", "Walserweg 21");
+(22, 45, "Ann Devon", "35 King George");
+(23, 54, "Roland Mendel", "Kirchgasse 6");
+(24, 494, "Aria Cruz", "Rua Orós, 92");
+(25, 451, "Diego Roel", "C/ Moralzarzal, 86");
+
+
 --
 -- Indexes for table `customers`
 --
@@ -110,19 +117,18 @@ ALTER TABLE `customers`
 --
 -- Miinus Query on `targetdb`
 --
-DROP
-PROCEDURE `MinusQuery`;
-CREATE DEFINER = `root`@`localhost` PROCEDURE `MinusQuery`() NOT DETERMINISTIC NO SQL SQL SECURITY DEFINER
-SELECT
-    `CustomerID`, `CustomerName`, `CustomerAddress`
-FROM
-    `sourcedb`.`Customers`
-WHERE
-    (`CustomerID`) AND `CustomerID` NOT IN(
-    SELECT
-        `ClientID`
-    FROM
-        `targetdb`.`Clients`
-    WHERE
-        (`ClientID`)
+DROP PROCEDURE `MinusQuery`;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `MinusQuery`() NOT DETERMINISTIC NO SQL SQL SECURITY DEFINER 
+INSERT INTO clients(
+    ClientID,
+    ClientName,
+    ClientAddress
 )
+SELECT
+    CustomerID,
+    CustomerName,
+    CustomerAddress
+FROM
+    sourcedb.customers
+LEFT JOIN clients ON customers.CustomerID = clients.ClientID
+WHERE clients.ClientID IS NULL

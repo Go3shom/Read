@@ -3,17 +3,19 @@ html, body { height: 100%; min-height: 100% }
 /* .container { display: grid; justify-content: space-between; grid-auto-flow: column; align-items: flex-start;} */
 .container { display: flex; justify-content: space-around; align-items: center;}
 
-.row { max-width: 50%; position: relative; }
+.row { max-width: 50%; position: relative; padding: 20px; }
 
 table { border-collapse: collapse; }
   table, th, td { border: 1px solid black; }
-  tr:nth-child(even) { background-color: powderblue; }
-  tr:first-child, tr:last-child{ color: white; background-color: DodgerBlue; }
+  tr:nth-child(odd) { background-color: powderblue; }
+  tr:first-child, tr:last-child { color: white; background-color: DodgerBlue; }
   tr:last-child { height: 30px; }
   th, td { padding: 7px; text-align: center; }
-  td:nth-child(odd) { width: 50px; }
+  td:nth-child(odd) { min-width: 50px; }
 
-.operate { display: flex; flex-direction: column; justify-content: space-around;}
+/* .operate { display: flex; flex-direction: column; justify-content: space-around;} */
+
+
 
 
 /* BOOTSTRAP */
