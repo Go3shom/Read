@@ -1,35 +1,14 @@
 <?php
-    
-    // $targetSQL = "CALL MinusQuery()";
 
-    $targetSQL = "SELECT * FROM Clients;";
+    include_once 'fetchData.php';
 
-    $targetResult = mysqli_query( $targetConnection, $targetSQL );
+    $sql = "SELECT ClientID, ClientName, ClientAddress FROM Clients";
 
-    $targetChecker = mysqli_num_rows( $targetResult );
-    
-    // var_dump( $targetChecker );
+    $result = $conn->query( $sql );
 
-    echo'<table> <tr><th>Client ID</th> <th>Client Name</th> <th>Client Address</th></tr>';
+    echo '<table class="target">';
+        display_query_header( $result );
+        display_query_rows( $result );
+    echo '<tr><td colspan = "3"></td></tr></table>';
 
-    if ( $targetChecker < 0 ) {
-        echo '<tr><td colspan = "3">No Rows Found.!!</td></tr>
-        <tr><td colspan = "3">Can\'t Get Data.!!!</td></tr>';
-    }  
-
-    if ( $targetChecker > 0 ) {
-
-        while ( $row = mysqli_fetch_assoc( $targetResult ) ) {
-            echo "<tr><td>";
-            echo $row['ClientID'];
-            echo "</td><td>";
-            echo $row['ClientName'];
-            echo "</td><td>";
-            echo $row['ClientAddress'];
-            echo "</td></tr>";
-        }
-        echo '<tr><td colspan = "3"></td></tr>';
-        echo '</table>';
-    }
-    
-    mysqli_close( $targetConnection );
+    $conn->close();

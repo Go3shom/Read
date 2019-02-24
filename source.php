@@ -1,26 +1,14 @@
-
 <?php
 
-    $sourceSQL = "SELECT * FROM `customers` WHERE 1;";
-    $sourceResult = mysqli_query( $sourceConnection, $sourceSQL );
-    $sourceChecker = mysqli_num_rows( $sourceResult );
+    include_once 'fetchData.php';
 
-    echo'<table> <tr><th>Customer ID</th> <th>Customer Name</th> <th>Customer Address</th></tr>';
+    $sql = "SELECT CustomerID, CustomerName, CustomerAddress FROM customers";
 
-    if ( $sourceChecker > 0 ) {
-        while ( $row = mysqli_fetch_assoc( $sourceResult )) {
-            echo "<tr><td>";
-            echo $row['CustomerID'];
-            echo "</td><td>";
-            echo $row['CustomerName'];
-            echo "</td><td>";
-            echo $row['CustomerAddress'];
-            echo "</td></tr>";
-        }
-        echo '<tr><td colspan = "3"></td></tr>';
-        echo '</table>';   
-    }
-    mysqli_close($sourceConnection);
+    $result = $con->query( $sql );
 
+    echo '<table class="source">';
+        display_query_header( $result );
+        display_query_rows( $result );
+    echo '<tr><td colspan="3"></td></tr></table>';
 
-
+    $con->close();

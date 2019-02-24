@@ -12,6 +12,11 @@
             <div class="row">
                 <?php include_once 'source.php'; ?>
             </div>
+
+            <div class="operate">
+                <?php //include_once 'operations.html'; ?>
+            </div>
+            
             <div class="row">
                 <?php include_once 'target.php'; ?>
             </div>

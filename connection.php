@@ -6,16 +6,15 @@
     $sourceDb = 'sourcedb';
     $targetDb = 'targetdb';
 
-    $sourceConnection = mysqli_connect( $serverName, $userName, $password, $sourceDb );
 
-    if ( !$sourceConnection ) {
-        die( "Source Connection Failed: " . mysqli_connect_error() );
+    $con = new mysqli( $serverName, $userName, $password, $sourceDb );
+    
+    if ( $con->connect_error ) {
+        die( "Conncetion Failed.!" . $con->connect_error );
     }
-    // echo "<b>Source Connection Connected Successfully</b></br>";
+    
+    $conn = new mysqli( $serverName, $userName, $password ,$targetDb );
 
-    $targetConnection = mysqli_connect( $serverName, $userName, $password, $targetDb );
-
-    if ( !$targetConnection ) {
-        die( "Target Connection Failed: " . mysqli_connect_error() );
+    if ( $conn->connect_error ) {
+        die( "Connection failed: " . $conn->connect_error );
     }
-    // echo "<b>Target Connection Connected Successfully</b></br>";
